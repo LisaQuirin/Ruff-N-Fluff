@@ -237,7 +237,8 @@ html:not(.is-review) .review-only { display: none !important; }
     display: none;
   }
   .site-nav.is-open { display: flex; }
-  .site-nav ul { flex-direction: column; gap: 0; }
+  .site-nav { align-items: flex-start; }
+  .site-nav ul { flex-direction: column; align-items: stretch; gap: 0; width: 13.05rem; }
   .site-nav ul a { display: block; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
   .site-nav ul a:hover { border-color: var(--line); color: var(--teal-dark); }
 }
@@ -578,6 +579,8 @@ html:not(.is-review) .photo-slot { display: none; }
 .faq-list { border-top: 1px solid #D7CFC2; }
 .faq-wrap .section-head { margin-bottom: 0; }
 .faq-list details { border-bottom: 1px solid #D7CFC2; }
+.faq-list details:last-child { border-bottom: 0; }
+#faqs { padding-bottom: calc(var(--section-pad) / 2); }
 .faq-list summary {
   list-style: none; cursor: pointer;
   display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
@@ -766,3 +769,24 @@ html:not(.is-review) .photo-slot { display: none; }
   .call-options { right: auto; left: 0; }
 }
 @media (max-width: 960px) { .portrait-slot { justify-content: flex-start; padding-top: 2.5rem; } }
+
+/* Jump links land with the pets above the section in view */
+.anchor-pets { position: absolute; left: 0; height: 0; top: calc(-1 * var(--w) * var(--ratio) * (1 - var(--ledge)) - 1rem); }
+.photo .photo-slot { margin: 0; }
+@media (max-width: 960px) {
+  /* Experience strip: more room above than below */
+  .facts { padding-top: 2.25rem; padding-bottom: 1.25rem; }
+  /* How it works: a quarter less space above the Doberman */
+  #meet-julie { padding-bottom: calc((var(--section-pad) + clamp(195px, 24vw, 285px) * .663 * .873) * .75); }
+  /* Step 3: a third less space after; half again above the pickup policy */
+  .steps li:last-child p { margin-bottom: 0.67em; }
+  .policy.perch { margin-top: calc(var(--w) * var(--ratio) * (1 - var(--ledge)) + 2.33rem); padding-top: calc(clamp(2rem, 4vw, 2.5rem) * 1.5); }
+}
+@media (max-width: 760px) {
+  #services > .suds-b { display: block; transform: translateY(45%); }
+}
+#pricing.anchor-pets { top: calc(-1 * min(clamp(320px, 50vw, 680px), 100vw - 2 * var(--gutter) - 3rem) * .477 - 1rem); }
+@media (max-width: 960px) { #pricing.anchor-pets { top: calc(-1 * (100vw - 2 * var(--gutter) - 1.5rem) / 1.2 * .477 - 1rem); } }
+
+/* Only the form's own submit check turns fields red */
+.field :is(input, select, textarea):user-invalid:not([aria-invalid="true"]) { border-color: #CFCFCF; background: #FAFAFA; box-shadow: none; }

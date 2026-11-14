@@ -98,6 +98,20 @@
       });
     });
 
+    /* Fields stay gray until someone tries to send the form with required fields empty.
+       Arriving at the form from any Request an Appointment link starts it fresh. */
+    function resetFields() {
+      required.forEach(function (field) {
+        field.removeAttribute("aria-invalid");
+        var err = document.getElementById(field.id + "-error");
+        if (err) err.hidden = true;
+      });
+      if (status) status.hidden = true;
+    }
+    document.querySelectorAll('a[href="#contact"]').forEach(function (link) {
+      link.addEventListener("click", resetFields);
+    });
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var firstInvalid = null;
