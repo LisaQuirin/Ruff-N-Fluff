@@ -133,6 +133,34 @@
     });
   }
 
+  /* FAQs: one answer open at a time (backup for browsers without <details name>) */
+  var faqs = Array.prototype.slice.call(document.querySelectorAll(".faq-list details"));
+  faqs.forEach(function (d) {
+    d.addEventListener("toggle", function () {
+      if (!d.open) return;
+      faqs.forEach(function (o) { if (o !== d && o.open) o.open = false; });
+    });
+  });
+
+  /* Footer Call/Text button: Text, Call, or Cancel */
+  var menu = document.querySelector("[data-call-menu]");
+  if (menu) {
+    var btn = menu.querySelector("[data-call-toggle]");
+    var opts = menu.querySelector(".call-options");
+    var setOpen = function (open) {
+      opts.hidden = !open;
+      btn.setAttribute("aria-expanded", String(open));
+      if (open) opts.querySelector("a").focus();
+    };
+    btn.addEventListener("click", function () { setOpen(opts.hidden); });
+    menu.querySelector("[data-call-cancel]").addEventListener("click", function () { setOpen(false); btn.focus(); });
+    opts.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !opts.hidden) { setOpen(false); btn.focus(); }
+    });
+    document.addEventListener("click", function (e) { if (!menu.contains(e.target)) setOpen(false); });
+  }
+
   /* Footer year */
   var year = document.querySelector("[data-year]");
   if (year) year.textContent = new Date().getFullYear();
