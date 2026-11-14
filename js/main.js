@@ -3,6 +3,26 @@
   "use strict";
   var root = document.documentElement;
 
+  /* Widow guard: keeps the last two words of each text block together,
+     so no line ends with a single word at any screen width. Wording is unchanged. */
+  Array.prototype.forEach.call(
+    document.querySelectorAll("h1, h2, h3, p, li, figcaption, summary, dd, .facts span"),
+    function (el) {
+      // Map the element's full text to its text nodes, then join the final two words.
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), node, map = [], text = "";
+      while ((node = walker.nextNode())) { map.push([node, text.length]); text += node.data; }
+      var trimmed = text.replace(/\s+$/, ""), i = trimmed.search(/\s\S*$/);
+      if (i < 1 || !/\S\s*\S/.test(trimmed.slice(0, i + 1) + "x")) return;
+      for (var k = map.length - 1; k >= 0; k--) {
+        if (map[k][1] <= i) {
+          var n = map[k][0], j = i - map[k][1];
+          n.data = n.data.slice(0, j) + "\u00A0" + n.data.slice(j + 1);
+          break;
+        }
+      }
+    }
+  );
+
   /* Mobile menu */
   var toggle = document.querySelector("[data-menu-toggle]");
   var nav = document.querySelector("[data-nav]");
@@ -89,8 +109,8 @@
         return;
       }
       status.innerHTML =
-        "<p><strong>Preview only:</strong> this form is not connected to a delivery service yet, so the request was not sent. " +
-        "Once Julie’s booking method is confirmed, this message will be replaced with the real confirmation text.</p>";
+        "<p><strong>This request was not sent.</strong> Online requests are coming soon. " +
+        "Please call or text Julie at <a href=\"tel:+12085857374\">(208) 585-7374</a> to plan your visit.</p>";
       status.hidden = false;
     });
   }

@@ -68,7 +68,9 @@ h1, h2, h3, h4 {
   margin: 0 0 0.6em;
   text-wrap: balance;
 }
-h1 { font-size: clamp(2.4rem, 4.2vw + 1rem, 4rem); font-weight: 600; }
+h1 { font-size: clamp(2.1rem, 4.2vw + 1rem, 4rem); font-weight: 600; }
+/* Each phrase of the headline stays together; the two phrases stack when space runs out. */
+.h1-line { display: inline-block; white-space: nowrap; }
 h2 { font-size: clamp(1.9rem, 2.2vw + 1rem, 2.75rem); }
 h3 { font-size: clamp(1.3rem, 0.6vw + 1.1rem, 1.55rem); }
 
@@ -104,6 +106,7 @@ a:hover { text-decoration-thickness: 2px; }
 .skip-link:focus { top: 1rem; }
 
 .muted { color: var(--ink-soft); font-size: 0.95em; }
+.nowrap { white-space: nowrap; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -152,6 +155,7 @@ a:hover { text-decoration-thickness: 2px; }
   font-size: 0.92rem; font-weight: 600;
 }
 html:not(.is-review) .review-only { display: none !important; }
+.is-review .public-only { display: none !important; }
 
 .review-toggle {
   position: fixed; left: 1rem; bottom: 1rem; z-index: 60;
@@ -299,9 +303,11 @@ html:not(.is-review) .review-only { display: none !important; }
   overflow: hidden;
   display: flex; flex-direction: column;
 }
-.card-media { aspect-ratio: 4 / 3; background: var(--paper-2); }
-.card-media picture, .card-media img { display: block; width: 100%; height: 100%; }
-.card-media img { object-fit: cover; }
+.card-media { background: var(--paper-2); }
+.card-media picture { display: block; }
+/* Every service photo shares one 4:3 frame; the split card uses two 2:3 halves. */
+.card-media img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.card-media-split img { aspect-ratio: 2 / 3; }
 .card-media-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: #fff; }
 .card-body { padding: clamp(1.5rem, 2.5vw, 2rem); display: flex; flex-direction: column; flex: 1; }
 .card-body > p:not(.card-tag):not(.price) { color: var(--ink-soft); }
@@ -340,15 +346,11 @@ html:not(.is-review) .review-only { display: none !important; }
 .review-panel p { margin: 0; }
 
 .price-factors {
-  display: grid; grid-template-columns: 0.8fr 2fr; gap: 2rem;
   padding: clamp(1.5rem, 3vw, 2.5rem); border-radius: var(--radius);
   background: var(--teal-tint);
 }
-.pf-intro h3 { margin-bottom: 0.4rem; }
-.pf-intro p { color: var(--ink-soft); margin: 0; }
-.pf-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem 2rem; margin: 0; }
-.pf-list dt { font-weight: 800; }
-.pf-list dd { margin: 0.15rem 0 0; color: var(--ink-soft); }
+.price-factors h3 { margin-bottom: 0.5rem; }
+.price-factors p { color: var(--ink-soft); margin: 0; max-width: 40rem; padding-right: clamp(0px, 14vw, 11rem); }
 
 /* ---------- Perched pets (transparent cutouts) ----------
    A partial pet sits on the top edge of its box. Each box sets:
@@ -385,6 +387,7 @@ html:not(.is-review) .review-only { display: none !important; }
   text-align: center; color: var(--ink-soft);
 }
 .portrait-slot span { font-family: var(--font-head); font-size: 1.4rem; color: var(--ink); }
+html:not(.is-review) .portrait-slot { border: 0; background: var(--teal-tint); }
 .julie-copy { max-width: 36rem; }
 .julie-copy p:not(.kicker):not(.review-note) { color: var(--ink-soft); }
 
@@ -417,7 +420,53 @@ html:not(.is-review) .review-only { display: none !important; }
   color: var(--ink-soft); font-family: var(--font-head); font-size: 1.2rem;
 }
 html:not(.is-review) .photo-slot { display: none; }
-.testimonial-slot {
+/* Kind words: testimonial cards with an owner or pet headshot */
+.kind-words { margin-top: clamp(3rem, 6vw, 4.5rem); }
+.kind-title { font-size: clamp(1.6rem, 1.4vw + 1rem, 2.1rem); }
+.testimonials {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.testimonial {
+  margin: 0; padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: var(--radius); background: var(--teal-tint);
+  display: grid; grid-template-columns: 88px 1fr; gap: 0 1.25rem; align-content: start;
+}
+.testimonial > * { grid-column: 2; }
+.testimonial > .t-photo { grid-column: 1; grid-row: 1 / span 3; }
+.t-photo {
+  width: 88px; height: 88px; border-radius: 16px; object-fit: cover; object-position: 50% 30%;
+  background: var(--paper);
+}
+.t-photo-empty {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  border: 2px dashed #9FC7C1; font-size: 0.75rem; line-height: 1.2; color: var(--ink-soft); padding: 0.4rem;
+}
+.testimonial blockquote { margin: 0; }
+.testimonial blockquote p {
+  font-family: var(--font-head); font-size: clamp(1.1rem, 0.4vw + 1rem, 1.25rem);
+  line-height: 1.5; margin: 0;
+}
+.testimonial figcaption { margin-top: 0.9rem; display: flex; flex-direction: column; }
+.testimonial figcaption strong { color: var(--teal-dark); font-weight: 800; }
+.testimonial figcaption span { font-size: 0.92rem; color: var(--ink-soft); }
+.testimonial .review-note { margin: 1rem 0 0; justify-self: start; }
+.testimonial-empty { background: transparent; border: 2px dashed #B9B0A2; }
+.testimonial-empty p { color: var(--ink-soft); margin: 0; align-self: center; }
+@media (max-width: 760px) {
+  .testimonials { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .testimonial { grid-template-columns: 1fr; }
+  .testimonial > *, .testimonial > .t-photo { grid-column: 1; grid-row: auto; }
+  .testimonial > .t-photo { margin-bottom: 1rem; }
+}
+.form-notice {
+  background: var(--teal-tint); border-left: 4px solid var(--teal);
+  padding: 0.7rem 0.9rem; border-radius: 4px; font-size: 0.95rem; margin-bottom: 1rem;
+}
+.form-notice a { font-weight: 700; }
+.testimonial-slot-unused {
   margin-top: 2rem; padding: 1.5rem; border: 2px dashed var(--tbc-line);
   border-radius: var(--radius); background: var(--tbc-bg); color: var(--tbc-ink);
 }
@@ -534,7 +583,6 @@ html:not(.is-review) .photo-slot { display: none; }
   .facts { grid-template-columns: repeat(2, 1fr); gap: 1.25rem 0; }
   .facts li:nth-child(3) { border-left: 0; padding-left: 0; }
   .cards { grid-template-columns: 1fr; max-width: 40rem; }
-  .price-factors { grid-template-columns: 1fr; }
   .julie-grid, .contact-grid { grid-template-columns: 1fr; }
   .portrait-slot { max-width: 24rem; aspect-ratio: 4 / 3; }
   .steps { grid-template-columns: 1fr; max-width: 36rem; }
@@ -544,7 +592,6 @@ html:not(.is-review) .photo-slot { display: none; }
   .wordmark { font-size: 1.35rem; }
   .facts { grid-template-columns: 1fr; }
   .facts li { border-left: 0; padding-left: 0; }
-  .pf-list { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   /* 16px on phones keeps iPhone from zooming into a field when it's tapped */
   .field input, .field select, .field textarea { font-size: 16px; }
