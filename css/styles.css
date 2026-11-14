@@ -80,7 +80,7 @@ p, li, dd { text-wrap: pretty; }
 p { margin: 0 0 1em; }
 
 a { color: var(--teal-dark); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
-a:hover { text-decoration-thickness: 2px; }
+@media (hover: hover) { a:hover { text-decoration-thickness: 2px; } }
 
 :focus-visible {
   outline: 3px solid var(--teal);
@@ -622,7 +622,7 @@ html:not(.is-review) .photo-slot { display: none; }
 .info-list dd { margin: 0.2rem 0 0; font-size: 1.1rem; line-height: 1.6; }
 .info-list dd .muted { font-size: 1em; }
 .contact-info a.link-strong { color: var(--steel); font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; }
-.contact-info a.link-strong:hover { color: var(--teal); }
+@media (hover: hover) { .contact-info a.link-strong:hover { color: var(--teal); } }
 .info-list dd > a { font-weight: 700; display: inline-block; padding-block: 0.6rem; margin-block: -0.6rem; }
 .contact-actions { gap: 16px; margin-top: 0.6rem; }
 .text-julie-title { font-size: 1.2rem; margin: 0.2rem 0 0.35rem; }
@@ -790,3 +790,18 @@ html:not(.is-review) .photo-slot { display: none; }
 
 /* Only the form's own submit check turns fields red */
 .field :is(input, select, textarea):user-invalid:not([aria-invalid="true"]) { border-color: #CFCFCF; background: #FAFAFA; box-shadow: none; }
+
+/* Every email and phone link in Contact uses the same Midnight Steel style */
+.contact-info a.link-strong, .contact-info a.link-strong:visited { color: var(--steel); }
+/* FAQ answer links: one underline weight */
+.faq-body a { text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+@media (hover: hover) { .faq-body a:hover { text-decoration-thickness: 1px; color: var(--teal); } }
+@media (max-width: 960px) {
+  /* Menu: equal space above and below the button */
+  .site-nav { gap: 0; }
+  .site-nav .nav-cta { margin-top: 1.5rem; }
+}
+@media (max-width: 760px) {
+  .price-factors { padding-bottom: calc(clamp(1.5rem, 3vw, 2.5rem) * 1.5); }
+  #services > .suds-b { transform: translateY(10%); }
+}
