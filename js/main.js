@@ -108,9 +108,26 @@
         firstInvalid.focus();
         return;
       }
+      /* Build an email to Julie from the form and open the visitor's email app. */
+      var to = form.getAttribute("data-mailto");
+      var val = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; };
+      var lines = [
+        "Owner: " + val("owner-name"),
+        "Phone or email: " + val("contact-pref"),
+        "Pet’s name: " + val("pet-name"),
+        "Species and breed: " + val("pet-breed"),
+        "Size or weight: " + val("pet-size"),
+        "Requested service: " + val("service"),
+        "Preferred days or times: " + val("availability"),
+        "Coat, behavior, or care notes: " + val("notes")
+      ];
+      var subject = "sPAWtime request for " + val("pet-name");
+      window.location.href = "mailto:" + to + "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(lines.join("\n"));
       status.innerHTML =
-        "<p><strong>This request was not sent.</strong> Online requests are coming soon. " +
-        "Please call or text Julie at <a href=\"tel:+12085857374\">(208) 585-7374</a> to plan your visit.</p>";
+        "<p><strong>Almost there.</strong> Your email app should open with your request ready to send. " +
+        "Press Send to share it with Julie. If your email app does not open, email " +
+        "<a href=\"mailto:" + to + "\">" + to + "</a> or text <a href=\"sms:+12085857374\">(208) 585-7374</a>.</p>";
       status.hidden = false;
     });
   }
