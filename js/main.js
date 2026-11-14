@@ -119,7 +119,7 @@
         "Species and breed: " + val("pet-breed"),
         "Size or weight: " + val("pet-size"),
         "Requested service: " + val("service"),
-        "Preferred days or times: " + val("availability"),
+        "Preferred days and times: " + val("availability"),
         "Coat, behavior, or care notes: " + val("notes")
       ];
       var subject = "sPAWtime request for " + val("pet-name");

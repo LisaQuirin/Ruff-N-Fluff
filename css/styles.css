@@ -124,6 +124,7 @@ a:hover { text-decoration-thickness: 2px; }
 .btn-primary:hover { filter: brightness(0.9); }
 .btn-secondary { background: transparent; color: var(--teal); border-color: var(--teal); }
 .btn-secondary:hover { background: var(--teal); color: #fff; }
+.nav-btn { width: 13.05rem; padding-inline: 0.75rem; } /* header and footer buttons share one width */
 .btn-small { min-height: 32px; padding: 0.3rem 0.95rem; font-size: 0.9rem; }
 /* Buttons look 32px tall; this invisible area keeps a comfortable 44px tap target. */
 .btn::after, .menu-toggle::after, .review-toggle::after { content: ""; position: absolute; inset: -7px -2px; }
@@ -199,13 +200,13 @@ html:not(.is-review) .review-only { display: none !important; }
 }
 .wordmark .wm-word { color: var(--steel); }
 .wordmark .wm-n { color: var(--teal); font-weight: 800; padding-inline: 0.04em; }
-.wordmark-light { color: #fff; }
+.wordmark-light, .wordmark-light .wm-word { color: #fff; }
 .wordmark-light .wm-n { color: var(--teal-light); }
 
 .site-nav { display: flex; align-items: baseline; gap: 1.75rem; }
 .site-nav ul { list-style: none; display: flex; align-items: baseline; gap: 1.5rem; margin: 0; padding: 0; }
 .site-nav ul a {
-  color: var(--ink); text-decoration: none; font-weight: 700; font-size: 0.9rem; line-height: 1.2;
+  color: var(--steel); text-decoration: none; font-weight: 700; font-size: 0.9rem; line-height: 1.2;
   padding: calc((32px - 1.08rem) / 2) 0 calc((32px - 1.08rem) / 2 - 1.5px); display: inline-block; border-bottom: 1.5px solid transparent;
 }
 .site-nav ul a:hover, .site-nav ul a[aria-current="true"] { border-color: var(--teal); color: var(--teal); }
@@ -269,14 +270,20 @@ html:not(.is-review) .review-only { display: none !important; }
   background-size: 100% 100%; background-repeat: no-repeat;
 }
 .suds-left { left: 0; }
+.suds-short { aspect-ratio: 1400 / 293; background-size: 100% 150%; background-position: bottom;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 60%); mask-image: linear-gradient(to bottom, transparent 0, #000 60%); }
+.suds-flip { transform: scaleX(-1); }
 .suds-half { width: min(1500px, 110%); left: -12%; aspect-ratio: 1400 / 220; background-size: 100% 200%; background-position: bottom;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 75%); mask-image: linear-gradient(to bottom, transparent 0, #000 75%); }
 /* Services suds rise over the price box so its green shows through the foam */
-#services > .suds-b { z-index: 2; }
+#services { overflow: clip; }
+#services > .suds-b { z-index: 2; transform: translateY(20%); }
 #pricing { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 .suds-right { right: 0; }
+.suds-hero { transform: translateY(20px); } /* sits partly behind the blue experience strip */
 .suds-center { left: 50%; transform: translateX(-50%); }
-.suds-a { background-image: url("../images/suds-a.webp"); -webkit-mask-image: linear-gradient(to top, transparent 0, #000 14px); mask-image: linear-gradient(to top, transparent 0, #000 14px); }
+.suds-a { background-image: url("../images/suds-a.webp"); }
+.hero-top > .suds { -webkit-mask-image: linear-gradient(to top, transparent 0, #000 14px); mask-image: linear-gradient(to top, transparent 0, #000 14px); }
 .suds-b { background-image: url("../images/suds-b.webp"); }
 .suds-c { background-image: url("../images/suds-c.webp"); }
 .suds-d { background-image: url("../images/suds-d.webp"); }
@@ -293,6 +300,7 @@ html:not(.is-review) .review-only { display: none !important; }
 }
 .hero-copy { max-width: 36rem; }
 .eyebrow { display: block; letter-spacing: 0.08em; }
+.eyebrow .sep { margin: 0 0.6em; }
 .pin {
   display: inline-block; vertical-align: 0.05em; margin-right: 0.55rem;
   width: 0.7rem; height: 0.7rem; border-radius: 50% 50% 50% 0;
@@ -309,7 +317,8 @@ html:not(.is-review) .review-only { display: none !important; }
   content: ""; position: absolute; inset: 1.5rem -1.25rem 0 1.5rem;
   background: var(--teal-tint); border-radius: var(--radius); z-index: -1;
 }
-.hero-photo img {
+.hero-photo picture { display: block; overflow: hidden; border-radius: var(--radius); }
+.hero-photo img { transform: scale(1.02); transform-origin: top left;
   width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 55% 35%;
   border-radius: var(--radius);
 }
@@ -328,7 +337,7 @@ html:not(.is-review) .review-only { display: none !important; }
   display: grid; grid-template-columns: repeat(4, 1fr);
   padding-block: 1.75rem;
 }
-.facts li { padding: 0.25rem 1.25rem; border-left: 1px solid rgba(255,255,255,.18); }
+.facts li { padding: 0.25rem 1.25rem; border-left: 1px solid rgba(255,255,255,.2); }
 .facts li:first-child { border-left: 0; padding-left: 0; }
 .facts strong { display: block; font-family: var(--font-head); font-size: clamp(1.35rem, 1.2vw + 1rem, 1.9rem); font-weight: 600; line-height: 1.2; }
 .facts span { color: #CFCAC2; font-size: 0.95rem; }
@@ -413,11 +422,11 @@ html:not(.is-review) .review-only { display: none !important; }
 }
 /* The towel-wrapped pack sits on the top edge of the dark band; Meet Julie gets matching room. */
 .section.perch { margin-top: 0; }
-#meet-julie { padding-bottom: calc(var(--section-pad) + min(clamp(360px, 57vw, 780px), 100vw - 2 * var(--gutter)) * .477); }
+#meet-julie { padding-bottom: calc(var(--section-pad) + clamp(195px, 24vw, 285px) * .663 * .873); }
 .price-factors.perch { margin-top: calc(var(--w) * var(--ratio) * (1 - var(--ledge)) + clamp(2.5rem, 5vw, 3.5rem)); }
 
 /* Trio peeking over the experience band */
-.facts-band { position: relative; }
+.facts-band { position: relative; box-shadow: 0 -1px 0 var(--steel); }
 .cutout-trio {
   position: absolute; bottom: 100%; left: var(--gutter); width: var(--w); height: auto;
   transform: translateY(calc(var(--ledge) * 100%)); pointer-events: none; z-index: 2;
@@ -438,7 +447,7 @@ html:not(.is-review) .review-only { display: none !important; }
   width: var(--cw); height: auto; pointer-events: none; z-index: 1;
 }
 @media (max-width: 960px) { .cutout-towel-cat { display: none; } }
-.policy.perch { margin-top: calc(var(--w) * var(--ratio) + clamp(2.5rem, 5vw, 3.5rem)); }
+.policy.perch { margin-top: calc(var(--w) * var(--ratio) * (1 - var(--ledge)) + clamp(2.5rem, 5vw, 3.5rem) - 67px); }
 
 /* ---------- Meet Julie ---------- */
 .portrait-wrap { position: relative; }
@@ -469,16 +478,20 @@ html:not(.is-review) .portrait-slot { background: var(--teal-tint); }
 .step-num {
   position: relative; z-index: 0;
   display: inline-flex; align-items: center; justify-content: center;
-  width: 4.25rem; height: 4.25rem; border-radius: 50%;
-  border: 1.5px solid var(--teal); color: var(--teal);
+  width: calc(4.25rem + 12px); height: calc(4.25rem + 12px);
+  color: var(--teal);
   font-family: var(--font-body); font-size: 2.6rem; font-weight: 800; line-height: 1;
-  margin: 5.33px 0 1.5rem 5.33px;
+  font-variant-numeric: lining-nums tabular-nums; padding-top: 6px; /* digits sit high in the font; this centers them in the ring */
+  margin: 0 0 1.5rem;
 }
 /* White soap bubble behind each step number */
 .step-num::before {
-  content: ""; position: absolute; z-index: -1; left: 50%; top: 50%;
-  width: calc(4.25rem + 10.67px); height: calc(4.25rem + 10.67px); transform: translate(-50%, -50%);
+  content: ""; position: absolute; z-index: -1; inset: 0;
   background: url("../images/bubble-round.webp") center / contain no-repeat;
+}
+/* Teal ring on top of the bubble: button line weight, inset by the numerals' stroke width */
+.step-num::after {
+  content: ""; position: absolute; inset: 6px; border: 1.5px solid var(--teal); border-radius: 50%;
 }
 .steps p { color: #D9D5CE; max-width: 22rem; }
 
@@ -605,8 +618,8 @@ html:not(.is-review) .photo-slot { display: none; }
 .info-list dd > a { font-weight: 700; display: inline-block; padding-block: 0.6rem; margin-block: -0.6rem; }
 .contact-actions { gap: 16px; margin-top: 0.6rem; }
 .text-julie-title { font-size: 1.2rem; margin: 0.2rem 0 0.35rem; }
-.text-julie dd p { font-size: 1rem; color: var(--ink-soft); margin: 0 0 0.6rem; max-width: 28rem; }
-.text-julie dd > a { display: block; width: max-content; margin: -0.6rem 0 0; }
+.text-julie dd p { font-size: 1rem; color: var(--ink-soft); margin: 0 0 0.2rem; max-width: 28rem; }
+.text-julie dd > a { display: block; width: max-content; margin: -0.6rem 0 0.4rem; }
 .text-julie .contact-actions { margin-top: 0; justify-content: start; }
 
 .request-form {
@@ -631,12 +644,12 @@ html:not(.is-review) .photo-slot { display: none; }
   color: var(--ink);
   font: 400 13px/1.4 var(--font-body);
 }
-.field ::placeholder { color: #767676; text-transform: uppercase; letter-spacing: 0.02em; opacity: 1; }
+.field ::placeholder { color: #767676; opacity: 1; }
 .field select { appearance: none; -webkit-appearance: none; padding-right: 40px; cursor: pointer;
   background-image: linear-gradient(45deg, transparent 50%, #767676 50%), linear-gradient(135deg, #767676 50%, transparent 50%);
   background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
   background-size: 5px 5px; background-repeat: no-repeat; }
-.field select:invalid { color: #767676; text-transform: uppercase; letter-spacing: 0.02em; }
+.field select:invalid { color: #767676; }
 .field select option { color: var(--ink); text-transform: none; }
 .field textarea { min-height: 130px; resize: vertical; }
 .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
@@ -661,15 +674,15 @@ html:not(.is-review) .photo-slot { display: none; }
 .confirm-cols li::before { content: ""; position: absolute; left: 0; top: 0.2em; width: 1.05em; height: 1.05em; border: 1.5px solid var(--tbc-ink); border-radius: 3px; background: #fff; }
 
 /* ---------- Footer ---------- */
-.site-footer { background: var(--paper); border-top: 1px solid var(--line); padding-bottom: 4.5rem; }
+.site-footer { background: var(--steel); color: #fff; padding-bottom: 4.5rem; }
 .footer-nav { display: flex; align-items: baseline; gap: 1.75rem; flex-wrap: wrap; }
 .footer-nav ul { list-style: none; display: flex; align-items: baseline; gap: 1.5rem; margin: 0; padding: 0; flex-wrap: wrap; }
 .footer-nav ul a {
-  color: var(--ink); text-decoration: none; font-weight: 700; font-size: 0.9rem; line-height: 1.2;
+  color: #fff; text-decoration: none; font-weight: 700; font-size: 0.9rem; line-height: 1.2;
   padding: calc((32px - 1.08rem) / 2) 0 calc((32px - 1.08rem) / 2 - 1.5px); display: inline-block; border-bottom: 1.5px solid transparent;
 }
 .footer-nav ul a:hover { border-color: var(--teal); color: var(--teal); }
-.footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 0.95rem; }
+.footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.2); color: #fff; font-size: 0.95rem; }
 .footer-meta p { margin: 0; }
 .footer-kicker { margin-right: 0.5rem; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
 .is-review .site-footer .tbc { color: var(--tbc-ink); }
