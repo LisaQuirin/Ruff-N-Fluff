@@ -806,3 +806,6 @@ html:not(.is-review) .photo-slot { display: none; }
   .price-factors { padding-bottom: calc(clamp(1.5rem, 3vw, 2.5rem) * 1.5); }
   #services > .suds-b { transform: translateY(10%); }
 }
+
+/* The review toggle shows only when the page is opened with ?review */
+html:not(.review-mode) .review-toggle { display: none !important; }

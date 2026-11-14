@@ -55,22 +55,19 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* Review notes toggle (preview only; remove before launch) */
+  /* Review notes: hidden for visitors. Add ?review to the address to see them
+     (for example www.ruff-n-fluff.com/?review), with a button to switch them off. */
   var reviewBtn = document.querySelector("[data-review-toggle]");
-  function setReview(on) {
-    root.classList.toggle("is-review", on);
-    if (reviewBtn) {
-      reviewBtn.setAttribute("aria-pressed", String(on));
-      reviewBtn.textContent = "Review notes: " + (on ? "On" : "Off");
-    }
-    try { localStorage.setItem("rnf-review", on ? "1" : "0"); } catch (err) { /* storage unavailable */ }
+  if (/[?&]review\b/.test(location.search)) {
+    root.classList.add("is-review");
+    root.classList.add("review-mode");
   }
-  try {
-    if (localStorage.getItem("rnf-review") === "0") setReview(false);
-  } catch (err) { /* storage unavailable */ }
   if (reviewBtn) {
     reviewBtn.addEventListener("click", function () {
-      setReview(!root.classList.contains("is-review"));
+      var on = !root.classList.contains("is-review");
+      root.classList.toggle("is-review", on);
+      reviewBtn.setAttribute("aria-pressed", String(on));
+      reviewBtn.textContent = "Review notes: " + (on ? "On" : "Off");
     });
   }
 
