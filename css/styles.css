@@ -447,7 +447,8 @@ html:not(.is-review) .review-only { display: none !important; }
   width: var(--cw); height: auto; pointer-events: none; z-index: 1;
 }
 @media (max-width: 960px) {
-  #pricing { --w: calc((100% - 1.5rem) / 1.2) !important; }
+  /* Towel group plus cat, centered and no wider than the green box */
+  .price-factors.perch { --w: calc((100% - 1rem) / 1.175) !important; --right: 0.5rem !important; }
   .cutout-towel-cat { --cw: calc(var(--w) * 0.25); }
 }
 .policy.perch { margin-top: calc(var(--w) * var(--ratio) * (1 - var(--ledge)) + clamp(2.5rem, 5vw, 3.5rem) - 67px); }
@@ -786,7 +787,7 @@ html:not(.is-review) .photo-slot { display: none; }
   #services > .suds-b { display: block; transform: translateY(45%); }
 }
 #pricing.anchor-pets { top: calc(-1 * min(clamp(320px, 50vw, 680px), 100vw - 2 * var(--gutter) - 3rem) * .477 - 1rem); }
-@media (max-width: 960px) { #pricing.anchor-pets { top: calc(-1 * (100vw - 2 * var(--gutter) - 1.5rem) / 1.2 * .477 - 1rem); } }
+@media (max-width: 960px) { #pricing.anchor-pets { top: calc(-1 * (100vw - 2 * var(--gutter) - 1rem) / 1.175 * .477 - 1rem); } }
 
 /* Only the form's own submit check turns fields red */
 .field :is(input, select, textarea):user-invalid:not([aria-invalid="true"]) { border-color: #CFCFCF; background: #FAFAFA; box-shadow: none; }
