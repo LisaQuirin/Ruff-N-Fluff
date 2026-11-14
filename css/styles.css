@@ -283,13 +283,13 @@ html:not(.is-review) .review-only { display: none !important; }
 .suds-right { right: 0; }
 .suds-hero { transform: translateY(20px); } /* sits partly behind the blue experience strip */
 .suds-center { left: 50%; transform: translateX(-50%); }
-.suds-a { background-image: url("../images/suds-a.webp"); }
+.suds-a { background-image: url("../images/soap-suds-a.webp"); }
 .hero-top > .suds { -webkit-mask-image: linear-gradient(to top, transparent 0, #000 14px); mask-image: linear-gradient(to top, transparent 0, #000 14px); }
-.suds-b { background-image: url("../images/suds-b.webp"); }
-.suds-c { background-image: url("../images/suds-c.webp"); }
-.suds-d { background-image: url("../images/suds-d.webp"); }
-.suds-e { background-image: url("../images/suds-e.webp"); }
-.suds-f { background-image: url("../images/suds-f.webp"); }
+.suds-b { background-image: url("../images/soap-suds-b.webp"); }
+.suds-c { background-image: url("../images/soap-suds-c.webp"); }
+.suds-d { background-image: url("../images/soap-suds-d.webp"); }
+.suds-e { background-image: url("../images/soap-suds-e.webp"); }
+.suds-f { background-image: url("../images/soap-suds-f.webp"); }
 .hero-top { padding-bottom: clamp(3rem, 7vw, 5.5rem); }
 @media (max-width: 760px) { .suds { width: 135%; } .suds-left { left: -10%; } .suds-right { right: -25%; } }
 
@@ -491,7 +491,7 @@ html:not(.is-review) .portrait-slot { background: var(--teal-tint); }
 /* White soap bubble behind each step number */
 .step-num::before {
   content: ""; position: absolute; z-index: -1; inset: 0;
-  background: url("../images/bubble-round.webp") center / contain no-repeat;
+  background: url("../images/soap-bubble.webp") center / contain no-repeat;
 }
 /* Teal ring on top of the bubble: button line weight, inset by the numerals' stroke width */
 .step-num::after {
