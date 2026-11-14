@@ -8,6 +8,7 @@
   Array.prototype.forEach.call(
     document.querySelectorAll("h1, h2, h3, p, li, figcaption, summary, dd, .facts span"),
     function (el) {
+      if (el.querySelector(".btn")) return; // leave button rows alone
       // Map the element's full text to its text nodes, then join the final two words.
       var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), node, map = [], text = "";
       while ((node = walker.nextNode())) { map.push([node, text.length]); text += node.data; }
